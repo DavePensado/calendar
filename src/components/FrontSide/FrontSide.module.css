@@ -1,0 +1,23 @@
+.container {
+  background-color: #39cec3;
+  padding: 80px 0;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.week-day {
+  font-size: 30px;
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.date {
+  font-size: 200px;
+  font-weight: 400;
+}

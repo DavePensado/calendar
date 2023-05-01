@@ -1,0 +1,6 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  border: 2px solid #00988e;
+  width: 80%;
+}

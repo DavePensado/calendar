@@ -1,0 +1,45 @@
+.wrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.week-day-wrapper {
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  height: 300px;
+}
+
+.week-day-wrapper p {
+  margin: 0 12px 10px 12px;
+}
+
+.heading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 70%;
+  margin-bottom: 30px;
+}
+
+.heading-wrapper i {
+  color: #029688;
+  cursor: pointer;
+}
+
+.heading {
+  text-transform: uppercase;
+  color: #029688;
+  margin: 0;
+  width: 250px;
+  text-align: center;
+}
+
+.week-day {
+  color: #d22a53;
+  font-weight: bold;
+}
