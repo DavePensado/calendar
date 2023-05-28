@@ -1,21 +1,15 @@
 import React from "react";
 import styles from "./FrontSide.module.css";
-import DateContext from "../../contexts/DateContext";
+import { format } from "date-fns";
 
-const FrontSide = () => {
+const FrontSide = (props) => {
+  const { date } = props;
+
   return (
-    <DateContext.Consumer>
-      {([date, currentDay]) => {
-        const { day, weekDay } = currentDay;
-
-        return (
-          <div className={styles.container}>
-            <h3 className={styles["week-day"]}>{weekDay}</h3>
-            <h1 className={styles.date}>{day}</h1>
-          </div>
-        );
-      }}
-    </DateContext.Consumer>
+    <div className={styles.container}>
+      <h3 className={styles["week-day"]}>{format(date, "EEEE")}</h3>
+      <h1 className={styles.date}>{format(date, "dd")}</h1>
+    </div>
   );
 };
 

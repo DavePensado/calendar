@@ -1,39 +1,63 @@
 import React from "react";
 import styles from "./MonthDay.module.css";
 import cx from "classnames";
-import { format, getDaysInMonth, startOfMonth } from "date-fns";
+import {
+  format,
+  eachDayOfInterval,
+  startOfMonth,
+  endOfMonth,
+  endOfWeek,
+  isWeekend,
+  isSameMonth,
+  startOfWeek,
+} from "date-fns";
+import DateContext from "../../../contexts/DateContext";
 
-const MonthDay = (props) => {
-  const { daysData, pickCurrentDay, currentDay } = props;
+const MonthDay = () => {
+  return (
+    <DateContext.Consumer>
+      {([date, pickCurrentDay]) => {
+        const allMonth = eachDayOfInterval({
+          start: startOfWeek(startOfMonth(date)),
+          end: endOfWeek(endOfMonth(date)),
+        });
 
-  const daysArr = [];
+        const getCurrentDay = (e) => {
+          const date = e.target.attributes["get-date"].value;
+          pickCurrentDay(date);
+        };
 
-  const changeDay = (e) => {
-    const dayValue = e.target.innerHTML;
-    pickCurrentDay(dayValue);
-  };
+        return (
+          <>
+            {allMonth.map((day, i) => {
+              const cn = cx(styles["month-day"], {
+                [styles["next-month"]]: !isSameMonth(day, date),
+                [styles["month-day-active"]]:
+                  format(date, "dd") === format(day, "dd") &&
+                  isSameMonth(day, date),
+                [styles.weekends]:
+                  isWeekend(day) &&
+                  isSameMonth(day, date) &&
+                  format(date, "dd") !== format(day, "dd"),
+                [styles[format(day, "EEE").toLocaleLowerCase()]]: i === 0,
+              });
 
-  const firstDayOfMonth = format(
-    startOfMonth(daysData),
-    "E"
-  ).toLocaleLowerCase();
-
-  for (let i = 0; i <= getDaysInMonth(daysData); i++) {
-    let monthDayClasses = cx({
-      [styles.hidden]: i === 0,
-      [styles[firstDayOfMonth]]: i === 0,
-      [styles["month-day"]]: i !== 0,
-      [styles["month-day-active"]]: i === Number(currentDay),
-    });
-
-    daysArr.push(
-      <p key={i} id={i} className={monthDayClasses} onClick={changeDay}>
-        {i}
-      </p>
-    );
-  }
-
-  return daysArr;
+              return (
+                <p
+                  className={cn}
+                  key={i}
+                  onClick={getCurrentDay}
+                  get-date={format(day, "yyyy-M-d")}
+                >
+                  {format(day, "d")}
+                </p>
+              );
+            })}
+          </>
+        );
+      }}
+    </DateContext.Consumer>
+  );
 };
 
 export default MonthDay;
